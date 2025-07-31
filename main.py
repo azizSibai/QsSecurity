@@ -1,7 +1,7 @@
 import os
 import sys
 import base64
-import hashlib
+from cryptography.hazmat.primitives import hashes
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
@@ -18,7 +18,7 @@ salt = b"QsSecureSalt123!"
 def getKeyFromPassword(password: str, salt: bytes) -> bytes:
     passwordBytes = password.encode()  # convert string to bytes
     kdf = PBKDF2HMAC(
-        algorithm=hashlib.sha256(),
+        algorithm=hashes.SHA256(),
         length=32,
         salt=salt,
         iterations=390000,
